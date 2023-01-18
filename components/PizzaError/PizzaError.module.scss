@@ -1,0 +1,13 @@
+.PizzaError{
+    padding: 80px 0;
+    text-align: center;
+    grid-column-start: 1;
+    grid-column-end: 5;
+    h1{
+        font-size: 34px;
+    }
+    p{
+        font-size: 18px;
+        margin-bottom: 22px;
+    }
+}
