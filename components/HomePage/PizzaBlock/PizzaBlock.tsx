@@ -1,4 +1,4 @@
-import Image, { ImageLoader } from "next/image";
+import Image from "next/image";
 import { FC, useCallback, useMemo, useState } from "react";
 import { usePizzasPrice } from "../../../hooks/usePizzasPrice";
 
@@ -39,9 +39,18 @@ export const PizzaBlock:FC<IPizzaBlock> = ({pizza}) => {
     const [ activeSize, setActiveSize] = useState(0);
 
     const currentPrice = useMemo(() => {
-        const newPrice = usePizzasPrice(price, activeSize, activeType)
-        return newPrice
-    }, [activeSize, activeType])
+        let currentPrice = price
+
+        if (activeSize === 1){
+            currentPrice *= 1.25 
+        } else if (activeSize === 2){
+            currentPrice *= 1.5
+        }
+        
+        if (activeType === 1) currentPrice *= 1.25
+        
+        return Math.floor(currentPrice)
+    }, [activeSize, activeType, price])
 
     const handleToSetType = useCallback((index: number) => {
         setActiveType(index)

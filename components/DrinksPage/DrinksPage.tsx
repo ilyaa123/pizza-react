@@ -14,8 +14,10 @@ interface IDrinksPageProps{
 }
 
 const DrinksPageNoMemo:FC<IDrinksPageProps> = ({drinks}) => {
+    console.log('drinks: ', drinks);
 
     const { status } = useAppSelector(store => store.products);
+    console.log('status: ', status);
     const { categoryId } = useAppSelector(store => store.filter);
 
     if (drinks.length == 0 && status === 'success') return <PizzaError />

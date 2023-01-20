@@ -2,8 +2,10 @@ import { configureStore } from "@reduxjs/toolkit";
 import filterSlice from "./slices/filterSlices/filterSlice";
 import cartSlice from "./slices/cartSlices/cartSlice";
 import productSlice from "./slices/productsSlices/productsSlice";
+import { createWrapper } from "next-redux-wrapper";
 
-const store = configureStore({
+
+export const store = configureStore({
     reducer: {
         filter: filterSlice,
         cart: cartSlice,
@@ -11,7 +13,9 @@ const store = configureStore({
     }
 })
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
 
-export default store
+
+export type AppStore = ReturnType<typeof store.getState>;
+
+export type AppDispatch = typeof store.dispatch;
+

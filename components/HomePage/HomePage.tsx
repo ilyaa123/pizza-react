@@ -15,6 +15,7 @@ interface IHomeProps{
 const HomePageNoMemo:FC<IHomeProps> = ({pizzas}) => {
 
     const { status } = useAppSelector(store => store.products);
+    
     const { categoryId } = useAppSelector(store => store.filter);
 
     if (pizzas.length == 0 && status === 'success') return <PizzaError />
