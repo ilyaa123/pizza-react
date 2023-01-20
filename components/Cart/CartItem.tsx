@@ -1,9 +1,18 @@
 import { FC } from "react";
+import Image, { ImageLoader } from 'next/image'
+
 import { useAppDispatch } from "../../redux/hooks";
-import { addProduct, IProduct, removeProduct } from "../../redux/slices/cartSlice";
+
+import { addProduct, removeProduct } from "../../redux/slices/cartSlices/cartSlice";
+import { IProduct } from "../../redux/slices/cartSlices/cartTypes";
 
 interface CartItemProps{
     product: IProduct
+}
+
+const imageLoader:ImageLoader = ({src}) => {
+
+    return src
 }
 
 export const CartItem:FC<CartItemProps> = ({product}) => {
@@ -33,7 +42,11 @@ export const CartItem:FC<CartItemProps> = ({product}) => {
     return (
         <div className="cart__item">
             <div className="cart__item-img">
-                <img
+                <Image
+                width={80}
+                height={80}
+                loader={imageLoader}
+                loading="eager"
                 className="pizza-block__image"
                 src={imageUrl}
                 alt="Pizza"

@@ -1,6 +1,5 @@
-import { Html } from "next/document";
 import Head from "next/head";
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { Header } from "./Header";
 
 interface Layout{
@@ -10,7 +9,7 @@ interface Layout{
     children?: React.ReactNode
 }
 
-export const Layout:FC<Layout> = ({title = 'Pizza-React', path, description = 'Pizza width react, next, redux', children }) => {
+const LayoutNoMemeo:FC<Layout> = ({title = 'Pizza-React', path, description = 'Pizza width react, next, redux', children }) => {
 
     return (
         <>
@@ -30,3 +29,5 @@ export const Layout:FC<Layout> = ({title = 'Pizza-React', path, description = 'P
         </>
     )
 }
+
+export const Layout = memo(LayoutNoMemeo)

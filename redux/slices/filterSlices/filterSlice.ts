@@ -1,17 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ISort, IStateFilter } from "./filterTypes";
 
-export interface ISort{
-    name: string;
-    sortProperty: string;
-}
-
-interface IState{
-    categoryId: number;
-    currentPage: number;
-    sort: ISort;
-}
-
-const initialState: IState = {
+const initialState: IStateFilter = {
     categoryId: 0,
     currentPage: 1,
     sort: {

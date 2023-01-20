@@ -1,6 +1,7 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useCallback, useEffect } from "react";
+
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { setCategoryId, setCurrentPage } from "../redux/slices/filterSlice";
+import { setCategoryId, setCurrentPage } from "../redux/slices/filterSlices/filterSlice";
 
 interface ICategoriesProps{
     categories: string[];
@@ -8,18 +9,18 @@ interface ICategoriesProps{
 
 export const Categories:FC<ICategoriesProps> = ({categories}) => {
 
-    useEffect(() => {
-        dispatch(setCategoryId(0))
-    }, [])
-
     const { categoryId } = useAppSelector(store => store.filter)
     
     const dispatch = useAppDispatch()
 
-    const handleOnclick = (index: number) => {
+    useEffect(() => {
+        dispatch(setCategoryId(0))
+    }, [dispatch])
+
+    const handleOnclick = useCallback((index: number) => {
         dispatch(setCategoryId(index));
         dispatch(setCurrentPage(1))
-    }
+    }, [dispatch])
 
     return (
         <div className="categories">

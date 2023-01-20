@@ -1,19 +1,19 @@
-import Link from "next/link";
 import { FC } from "react";
+import Image from "next/image";
+import Link from "next/link";
+
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { clearDrinks } from "../../redux/slices/cartDrinkSlice";
-import { clearProducts } from "../../redux/slices/cartSlice";
+import { clearDrinks, clearProducts } from "../../redux/slices/cartSlices/cartSlice";
+
 import { CartDrinkItem } from "./CartDrinkItem";
 import { CartEmpty } from "./CartEmpty";
 import { CartItem } from "./CartItem";
-
 
 export const CartContent:FC = () => {
 
     const dispatch = useAppDispatch()
 
-    const { products, totalPrice } = useAppSelector(store => store.cart);
-	const { productsDrink, totalPriceDrink } = useAppSelector(store => store.cartDrink)
+    const { products, productsDrink, totalPrice } = useAppSelector(store => store.cart);
 
 	const handleOnClickClear = () => {
 		dispatch(clearProducts());
@@ -22,12 +22,12 @@ export const CartContent:FC = () => {
 
     return (
 		<div className="container--cart">
-		{	products.length === 0 ? <CartEmpty /> :
+		{	products.length === 0 && productsDrink.length === 0 ? <CartEmpty /> :
 			<div className="cart">
 				<div className="cart__top">
-					<h2 className="content__title"> <img src="img/cart.svg" alt="Корзина" /> Корзина</h2>
+					<h2 className="content__title">Корзина</h2>
 					<div onClick={handleOnClickClear} className="cart__clear">
-						<img src="img/trash.svg" alt="Очитска корзины" />
+						<Image loading="lazy" width={20} height={20} src="img/trash.svg" alt="Очистка корзины"/>
 						<span>Очистить корзину</span>
 					</div>
 				</div>
@@ -52,11 +52,11 @@ export const CartContent:FC = () => {
 						<span> Всего товаров: <b>{
 							products.reduce((sum, obj) => (sum + obj.count), 0) + productsDrink.reduce((sum, obj) => (sum + obj.count), 0)
 						} шт.</b> </span>
-						<span> Сумма заказа: <b>{totalPrice + totalPriceDrink} ₽</b> </span>
+						<span> Сумма заказа: <b>{totalPrice} ₽</b> </span>
 					</div>
 					<div className="cart__bottom-buttons">
 						<Link href="/" className="button button--outline button--add go-back-btn">
-							<img src="img/grey-arrow-left.svg" alt="Вернутся назад" />
+							<Image loading="lazy" width={8} height={14} src="img/grey-arrow-left.svg" alt="Вернутся назад" />
 							<span>Вернуться назад</span>
 						</Link>
 						<div className="button pay-btn">

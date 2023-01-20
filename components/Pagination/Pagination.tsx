@@ -3,8 +3,10 @@ import React from 'react';
 import ReactPaginate from 'react-paginate';
 
 import style from './Pagination.module.scss';
+
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { setCurrentPage } from "../../redux/slices/filterSlice";
+import { setCurrentPage } from "../../redux/slices/filterSlices/filterSlice";
+
 interface IPaginationProps{
     pageCount: number;
 }

@@ -1,15 +1,14 @@
 import {  useEffect } from "react";
 import { NextPage } from 'next';
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { fetchPizzas } from "../redux/slices/pizzasSlice";
+import { fetchPizzas } from "../redux/slices/productsSlices/asyncThunk";
 
 import { Categories } from "../components/Categories";
 import { Layout } from "../components/Layout";
 import { Pagination } from "../components/Pagination/Pagination";
 import { Sort } from "../components/Sort";
-
-
 import { HomePage } from "../components/HomePage/HomePage";
+
 
 
 export const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
@@ -22,7 +21,7 @@ const Home:NextPage<IHomeProps> = ({path}) => {
 	
 	const dispatch = useAppDispatch();
 
-	const { items: pizzas } = useAppSelector(store => store.pizzas);
+	const { pizzas } = useAppSelector(store => store.products);
 
 	const { categoryId, currentPage, sort: { sortProperty } } = useAppSelector(store => store.filter);
 
@@ -33,7 +32,7 @@ const Home:NextPage<IHomeProps> = ({path}) => {
 			category: categoryId > 0 ? `${categoryId}` : '',
 			currentPage,
 		}))
-	}, [categoryId, currentPage, sortProperty]);
+	}, [categoryId, currentPage, sortProperty, dispatch]);
 
 
   	return (

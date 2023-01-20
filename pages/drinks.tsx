@@ -1,12 +1,15 @@
 import { NextPage } from "next"
 import { useEffect } from "react";
+
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { fetchDrinks } from "../redux/slices/productsSlices/asyncThunk";
+
 import { Categories } from "../components/Categories";
 import { DrinksPage } from "../components/DrinksPage/DrinksPage";
 import { Layout } from "../components/Layout"
 import { Pagination } from "../components/Pagination/Pagination";
 import { Sort } from "../components/Sort";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { fetchDrinks } from "../redux/slices/drinksSlice";
+
 
 export const categoriesToDrinks = ["Все", "Напитки", "Чаи", "Соки", "Морс", "Вода", "Кофе"];
 
@@ -18,7 +21,7 @@ const Drinks:NextPage<IDrinksProps> = ({path}) => {
 
     const dispatch = useAppDispatch();
 
-	const { drinks } = useAppSelector(store => store.drinks)
+	const { drinks } = useAppSelector(store => store.products)
 
 	const { categoryId, currentPage, sort: { sortProperty } } = useAppSelector(store => store.filter);
 
@@ -29,7 +32,7 @@ const Drinks:NextPage<IDrinksProps> = ({path}) => {
 			category: categoryId > 0 ? `${categoryId}` : '',
 			currentPage,
 		}))
-	}, [categoryId, currentPage, sortProperty]);
+	}, [categoryId, currentPage, sortProperty, dispatch]);
 
     return (
         <Layout title="Напитки" path="drinks">

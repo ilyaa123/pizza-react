@@ -1,10 +1,17 @@
 import { FC } from "react";
+import Image, { ImageLoader } from "next/image";
+
 import { useAppDispatch } from "../../redux/hooks";
-import { addDrink, IProductDrink, removeDrink } from "../../redux/slices/cartDrinkSlice";
-import { addProduct, removeProduct } from "../../redux/slices/cartSlice";
+import { addDrink, removeDrink } from "../../redux/slices/cartSlices/cartSlice";
+import { IProductDrink } from "../../redux/slices/cartSlices/cartTypes";
 
 interface CartDrinkItemProps{
     drink: IProductDrink
+}
+
+const imageLoader:ImageLoader = ({src}) => {
+
+    return src
 }
 
 export const CartDrinkItem:FC<CartDrinkItemProps> = ({drink}) => {
@@ -34,10 +41,14 @@ export const CartDrinkItem:FC<CartDrinkItemProps> = ({drink}) => {
     return (
         <div className="cart__item">
             <div className="cart__item-img">
-                <img
+                <Image
+                width={80}
+                height={80}
+                loader={imageLoader}
+                loading="eager"
                 className="pizza-block__image"
                 src={imageUrl}
-                alt="Pizza"
+                alt="Drink"
                 />
             </div>
             <div className="cart__item-info">

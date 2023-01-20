@@ -1,7 +1,13 @@
 import { FC } from "react";
+
+import Image, { ImageLoader } from "next/image";
+
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { addDrink } from "../../../redux/slices/cartDrinkSlice";
-import { Drink } from "../../../types/pizzas";
+
+import { addDrink } from "../../../redux/slices/cartSlices/cartSlice";
+import { Drink } from "../../../redux/slices/productsSlices/productsTypes";
+import { imageLoader } from "../../../utils/imageLoader";
+
 
 interface IDrinksBlockProps{
     drink: Drink;
@@ -13,7 +19,7 @@ export const DrinksBlock:FC<IDrinksBlockProps> = ({drink}) => {
 
     const {id, title, price, imageUrl } = drink;
 
-    const countProduct = useAppSelector(store => store.cartDrink.productsDrink.filter(obj => obj.id === id))
+    const countProduct = useAppSelector(store => store.cart.productsDrink.filter(obj => obj.id === id))
 
     const handleToAdd = () => {
         const product = {
@@ -28,14 +34,19 @@ export const DrinksBlock:FC<IDrinksBlockProps> = ({drink}) => {
 
     return (
         <div className="pizza-block">
-			<img
+			<Image
+                width={260}
+                height={260}
+                loader={imageLoader}
+                loading="eager"
+                unoptimized
 				className="pizza-block__image"
 				src={imageUrl}
 				alt="Pizza"
 			/>
 			<h4 className="pizza-block__title">{title}</h4>
 			<div className="pizza-block__bottom">
-				<div className="pizza-block__price">от {price} ₽</div>
+				<div className="pizza-block__price"> {price} ₽</div>
 				<div onClick={handleToAdd} className="button button--outline button--add">
                     <svg
                         width="12"

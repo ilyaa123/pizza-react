@@ -5,7 +5,7 @@ import { Layout } from "../components/Layout"
 
 const Cart:FC = () => {
     return (
-        <Layout title="Корзина">
+        <Layout path="/cart" title="Корзина">
             <CartContent />
         </Layout>
     )

@@ -1,7 +1,9 @@
-import { FC } from "react";
-import { categories } from "../../pages";
+import { FC, memo } from "react";
+
 import { useAppSelector } from "../../redux/hooks";
-import { Pizzas } from "../../types/pizzas";
+import { Pizzas } from "../../redux/slices/productsSlices/productsTypes";
+
+import { categories } from "../../pages";
 import { PizzaBlock } from "./PizzaBlock/PizzaBlock";
 import { PizzaError } from "../PizzaError/PizzaError";
 import { Skeleton } from "../Skeleton";
@@ -10,9 +12,9 @@ interface IHomeProps{
     pizzas: Pizzas
 }
 
-export const HomePage:FC<IHomeProps> = ({pizzas}) => {
+const HomePageNoMemo:FC<IHomeProps> = ({pizzas}) => {
 
-    const { status } = useAppSelector(store => store.pizzas);
+    const { status } = useAppSelector(store => store.products);
     const { categoryId } = useAppSelector(store => store.filter);
 
     if (pizzas.length == 0 && status === 'success') return <PizzaError />
@@ -39,3 +41,5 @@ export const HomePage:FC<IHomeProps> = ({pizzas}) => {
         </>
     )
 }
+
+export const HomePage = memo(HomePageNoMemo)

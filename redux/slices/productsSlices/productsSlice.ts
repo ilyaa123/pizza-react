@@ -1,32 +1,33 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Drinks, FetchParams } from "../../types/pizzas";
-
-interface IPizzaSlice{
-    drinks: Drinks;
-    status: 'loading' | 'success' | 'error';
-}
-
-export const fetchDrinks = createAsyncThunk<Drinks, FetchParams>('drinks/fechDrinks', async (params) => {
-    const { sortBy, order, category, currentPage } = params;
-
-    const { data } = await axios.get(`https://63c3a5d3a9085635752ac840.mockapi.io/drinks?page=${currentPage}&limit=8&category=${category}&sortBy=${sortBy}&order=${order}`);
-
-    return data;
-})
+import { fetchDrinks, fetchPizzas } from "./asyncThunk";
+import { Drinks, FetchParams, IPizzaSlice, Pizzas } from "./productsTypes";
 
 const initialState:IPizzaSlice = {
+    pizzas: [],
     drinks: [],
     status: 'loading',
 }
 
-const drinksSlice = createSlice({
-    name: 'drinks',
+const productSlice = createSlice({
+    name: 'pizzas',
     initialState,
     reducers: {
         
     }, 
     extraReducers: (builder) => {
+        builder.addCase(fetchPizzas.pending, (state) => {
+            state.status = 'loading';
+            state.pizzas = [];
+        });
+        builder.addCase(fetchPizzas.fulfilled, (state, action) => {
+            state.status = 'success';
+            state.pizzas = action.payload
+        })
+        builder.addCase(fetchPizzas.rejected, (state) => {
+            state.status = 'error';
+            state.pizzas = [];
+        });
         builder.addCase(fetchDrinks.pending, (state) => {
             state.status = 'loading';
             state.drinks = [];
@@ -34,7 +35,7 @@ const drinksSlice = createSlice({
         builder.addCase(fetchDrinks.fulfilled, (state, action) => {
             state.status = 'success';
             state.drinks = action.payload
-        })
+        });
         builder.addCase(fetchDrinks.rejected, (state) => {
             state.status = 'error';
             state.drinks = [];
@@ -42,6 +43,4 @@ const drinksSlice = createSlice({
     }
 })
 
-export default drinksSlice.reducer
-
-export const {} = drinksSlice.actions
+export default productSlice.reducer

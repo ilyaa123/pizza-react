@@ -9,13 +9,6 @@ export type Pizza = {
     rating: number;
 }
 
-export type FetchParams = {
-    sortBy: string,
-	order: string,
-	category: string,
-    currentPage: number,
-}
-
 export type Drink = {
     id: number,
     title: string,
@@ -27,3 +20,16 @@ export type Drink = {
 
 export type Pizzas = Array<Pizza>
 export type Drinks = Array<Drink>
+
+export type FetchParams = {
+    sortBy: string,
+	order: string,
+	category: string,
+    currentPage: number,
+}
+
+export interface IPizzaSlice{
+    pizzas: Pizzas;
+    drinks: Drinks;
+    status: 'loading' | 'success' | 'error';
+}

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 
 interface IPizzaSizesProps{
     sizes: number[];
@@ -6,7 +6,7 @@ interface IPizzaSizesProps{
     handleToSetSize: (index: number) => void;
 }
 
-export const PizzaSizes:FC<IPizzaSizesProps> = ({sizes, activeSize, handleToSetSize}) => {
+const PizzaSizesNoMemo:FC<IPizzaSizesProps> = ({sizes, activeSize, handleToSetSize}) => {
 
     return (
         <ul>
@@ -18,3 +18,5 @@ export const PizzaSizes:FC<IPizzaSizesProps> = ({sizes, activeSize, handleToSetS
 		</ul>
     )
 }
+
+export const PizzaSizes = memo(PizzaSizesNoMemo)

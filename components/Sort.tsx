@@ -1,7 +1,9 @@
+import React, { FC, useCallback, useState } from "react";
 import classNames from "classnames";
-import React, { FC, useCallback, useEffect, useRef, useState } from "react";
+
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { ISort, setSort } from "../redux/slices/filterSlice";
+import { setSort } from "../redux/slices/filterSlices/filterSlice";
+import { ISort } from "../redux/slices/filterSlices/filterTypes";
 
 const list = [
 	{name: 'популярности (DESC)', sortProperty: 'rating'},
@@ -25,7 +27,7 @@ export const Sort:FC = () => {
 	const handleOnSelected = useCallback((listItem:ISort) => {
 		dispatch(setSort(listItem))
 		setOpen(false)
-	}, [])
+	}, [dispatch])
 
     return (
         <div className="sort">

@@ -1,17 +1,18 @@
-import { FC } from "react";
+import { FC, memo } from "react";
+import classNames from "classnames";
+
 import Image from 'next/image'
 import Link from "next/link";
 import { useAppSelector } from "../redux/hooks";
-import classNames from "classnames";
+
 
 interface IHeaderProps{
 	path: string;
 }
 
-export const Header:FC<IHeaderProps> = ({path}) => {
+const HeaderNoMemo:FC<IHeaderProps> = ({path}) => {
 
-	const { products, totalPrice } = useAppSelector(store => store.cart);
-	const { productsDrink, totalPriceDrink } = useAppSelector(store => store.cartDrink)
+	const { products, productsDrink, totalPrice } = useAppSelector(store => store.cart);
 
     return(
         <div className="header">
@@ -31,7 +32,7 @@ export const Header:FC<IHeaderProps> = ({path}) => {
 				</div>
 				<div className="header__cart">
 					<Link href="/cart" className="button button--cart">
-						<span>{totalPrice + totalPriceDrink} ₽</span>
+						<span>{totalPrice} ₽</span>
 						<div className="button__delimiter"></div>
 						<svg
 							width="18"
@@ -71,3 +72,5 @@ export const Header:FC<IHeaderProps> = ({path}) => {
 		</div>
     )
 }
+
+export const Header = memo(HeaderNoMemo)

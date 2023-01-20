@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from "react";
+import { FC, memo } from "react";
 
 enum typeNames{
     'тонкое',
@@ -11,7 +11,7 @@ interface IPizzaTypesProps{
     activeType: number;
 }
 
-export const PizzaTypes:FC<IPizzaTypesProps> = ({types, activeType,  handleToSetType}) => {
+const PizzaTypesNoMemo:FC<IPizzaTypesProps> = ({types, activeType,  handleToSetType}) => {
 
     return (
         <ul>
@@ -23,3 +23,5 @@ export const PizzaTypes:FC<IPizzaTypesProps> = ({types, activeType,  handleToSet
 		</ul>
     )
 }
+
+export const PizzaTypes = memo(PizzaTypesNoMemo)

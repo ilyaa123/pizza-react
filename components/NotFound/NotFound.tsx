@@ -2,6 +2,7 @@ import { FC } from "react";
 import Image from 'next/image';
 
 import style from './NotFound.module.scss';
+
 import { useRouter } from "next/router";
 
 export const NotFound:FC = () => {

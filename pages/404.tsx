@@ -3,7 +3,7 @@ import { NotFound } from "../components/NotFound/NotFound";
 
 const Custom404 = () => {
     return (
-        <Layout title="Страница не найдена">
+        <Layout path="404" title="Страница не найдена">
             <NotFound />
         </Layout>
     )

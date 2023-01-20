@@ -1,7 +1,11 @@
-import { FC, useCallback, useState } from "react";
+import Image, { ImageLoader } from "next/image";
+import { FC, useCallback, useMemo, useState } from "react";
+import { usePizzasPrice } from "../../../hooks/usePizzasPrice";
+
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { addProduct } from "../../../redux/slices/cartSlice";
-import { Pizza } from "../../../types/pizzas";
+import { addProduct } from "../../../redux/slices/cartSlices/cartSlice";
+import { imageLoader } from "../../../utils/imageLoader";
+
 import { PizzaSizes } from "./PizzaFiltres/PizzaSizes";
 import { PizzaTypes } from "./PizzaFiltres/PizzaTypes";
 
@@ -34,6 +38,11 @@ export const PizzaBlock:FC<IPizzaBlock> = ({pizza}) => {
     const [ activeType, setActiveType] = useState(types[0]);
     const [ activeSize, setActiveSize] = useState(0);
 
+    const currentPrice = useMemo(() => {
+        const newPrice = usePizzasPrice(price, activeSize, activeType)
+        return newPrice
+    }, [activeSize, activeType])
+
     const handleToSetType = useCallback((index: number) => {
         setActiveType(index)
     }, [])
@@ -46,7 +55,7 @@ export const PizzaBlock:FC<IPizzaBlock> = ({pizza}) => {
         const product = {
             id,
             title,
-            price,
+            price: currentPrice,
             imageUrl,
             type: typeNames[activeType],
             size: sizes[activeSize],
@@ -57,7 +66,12 @@ export const PizzaBlock:FC<IPizzaBlock> = ({pizza}) => {
 
     return (
         <div className="pizza-block">
-			<img
+			<Image
+                width={260}
+                height={260}
+                loader={imageLoader}
+                loading="eager"
+                unoptimized
 				className="pizza-block__image"
 				src={imageUrl}
 				alt="Pizza"
@@ -68,7 +82,7 @@ export const PizzaBlock:FC<IPizzaBlock> = ({pizza}) => {
                 <PizzaSizes sizes={sizes} activeSize={activeSize} handleToSetSize={handleToSetSize} />
 			</div>
 			<div className="pizza-block__bottom">
-				<div className="pizza-block__price">от {price} ₽</div>
+				<div className="pizza-block__price">от {currentPrice} ₽</div>
 				<div onClick={handleToAdd} className="button button--outline button--add">
                     <svg
                         width="12"
